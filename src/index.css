@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Manrope";
+}
+
+
+
+.slick-dots {
+  position: absolute !important;
+  bottom: 1rem !important;
+  left: 50% !important;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+.slick-dots li button:before {
+  content: '•';
+  font-size: 1.25rem !important;
+  color: #0070d386 !important;
+  opacity: 1 !important;
+}
+
+.slick-dots li.slick-active button:before {
+  color: #006fd3 !important;
+}
