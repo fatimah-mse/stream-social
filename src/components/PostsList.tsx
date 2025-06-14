@@ -320,7 +320,7 @@ export default function PostsList() {
     return (
         <section className="py-4 pt-10 max-992:py-3 max-992:px-10 max-768:px-5 px-20">
             {posts.map((post) => (
-                <div
+                <div data-aos="fade-up"
                     key={post._id}
                     className="relative border-2 border-mySecondary rounded-lg my-4 px-4 py-5 shadow-2xl"
                 >

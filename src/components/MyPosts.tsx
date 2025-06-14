@@ -322,7 +322,7 @@ export default function MyPosts() {
                 <AddPost />
             </div>
             {posts.map((post) => (
-                <div
+                <div data-aos="fade-up"
                     key={post._id}
                     className="relative border-2 border-mySecondary rounded-lg my-4 px-4 py-5 shadow-2xl"
                 >
