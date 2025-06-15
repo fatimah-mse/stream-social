@@ -6,6 +6,7 @@ import userImg from "../assets/user.png"
 import reactUNactive from "../assets/reaction-dark.png"
 import reactActive from "../assets/reaction-red.png"
 import deleteicon from "../assets/delete.png"
+import noData from "../assets/No Data img.png"
 
 interface Post {
     _id: string
@@ -66,14 +67,11 @@ export default function MyPosts() {
                     showConfirmButton: false,
                 })
             } else {
-                // المستخدم ما عامل لايك => نضيف لايك
                 const response = await axios.post(
                     `https://stream-social-apis-production.up.railway.app/api/likes/${postId}`,
                     {},
                     { headers: { Authorization: `Bearer ${token}` } }
                 )
-
-                // تأكد من نجاح العملية ومن اليوزر
                 const userIdFromResponse = response.data?.data?.userId
                 if (userIdFromResponse === userId) {
                     setPostLikes((prev) => ({ ...prev, [postId]: true }))
@@ -321,45 +319,51 @@ export default function MyPosts() {
                 <h2 className="text-3xl font-merienda font-bold text-mySecondary max-576:text-center">My Posts</h2>
                 <AddPost />
             </div>
-            {posts.map((post) => (
-                <div data-aos="fade-up"
-                    key={post._id}
-                    className="relative border-2 border-mySecondary rounded-lg my-4 px-4 py-5 shadow-2xl"
-                >
-                    <h2 className="mb-5 max-576:!text-xl max-576:w-3/4 text-2xl font-bold text-myPrimary capitalize font-merienda">{post.title}</h2>
-                    <p className="mb-4 text-base capitalize">{post.content}</p>
-                    <span className="text-sm text-mySecondary font-extrabold underline">by {post.authorId.name}</span>
+            {posts.length > 0 ? (
+                posts.map((post) => (
+                    <div data-aos="fade-up"
+                        key={post._id}
+                        className="relative border-2 border-mySecondary rounded-lg my-4 px-4 py-5 shadow-2xl"
+                    >
+                        <h2 className="mb-5 max-576:!text-xl max-576:w-3/4 text-2xl font-bold text-myPrimary capitalize font-merienda">{post.title}</h2>
+                        <p className="mb-4 text-base capitalize">{post.content}</p>
+                        <span className="text-sm text-mySecondary font-extrabold underline">by {post.authorId.name}</span>
 
-                    <form id="comment-form" className="flex items-center my-8 gap-4 max-576:flex-col max-576:!items-start" onSubmit={(e) => handleAddComment(e, post._id)}>
-                        <input id="comment-input" type="text" placeholder="add comment.."
-                            className="flex-1 border-transparent focus:outline-none py-2 focus:border-b-2 focus:border-b-myPrimary" />
-                        <input type="submit" value="SEND" className="bg-myPrimary font-semibold text-white px-4 py-2 rounded-lg" />
+                        <form id="comment-form" className="flex items-center my-8 gap-4 max-576:flex-col max-576:!items-start" onSubmit={(e) => handleAddComment(e, post._id)}>
+                            <input id="comment-input" type="text" placeholder="add comment.."
+                                className="flex-1 border-transparent focus:outline-none py-2 focus:border-b-2 focus:border-b-myPrimary" />
+                            <input type="submit" value="SEND" className="bg-myPrimary font-semibold text-white px-4 py-2 rounded-lg" />
 
-                    </form>
-                    <div className="flex justify-between items-center">
-                        <div className="flex gap-2">
-                            <img
-                                onClick={() => handleLike(post._id)}
-                                src={postLikes[post._id] ? reactActive : reactUNactive}
-                                alt="reaction"
-                                style={{ cursor: "pointer", width: "24px" }}
-                            />
-                            <span>{post.likes.length}</span>
+                        </form>
+                        <div className="flex justify-between items-center">
+                            <div className="flex gap-2">
+                                <img
+                                    onClick={() => handleLike(post._id)}
+                                    src={postLikes[post._id] ? reactActive : reactUNactive}
+                                    alt="reaction"
+                                    style={{ cursor: "pointer", width: "24px" }}
+                                />
+                                <span>{post.likes.length}</span>
+                            </div>
+                            <button
+                                className="block px-4 py-2 bg-myPrimary text-white rounded-lg hover:bg-opacity-80 transition"
+                                onClick={() => handleShowComments(post)}
+                            >
+                                Show Comments
+                            </button>
+                            {userId === post.authorId._id && (
+                                <img onClick={() => handleDeletePost(post._id)}
+                                    className="absolute rounded-full w-12 !top-4 right-4" src={deleteicon} alt="deleteicon" />
+                            )}
                         </div>
-                        <button
-                            className="block px-4 py-2 bg-myPrimary text-white rounded-lg hover:bg-opacity-80 transition"
-                            onClick={() => handleShowComments(post)}
-                        >
-                            Show Comments
-                        </button>
-                        {userId === post.authorId._id && (
-                            <img onClick={() => handleDeletePost(post._id)}
-                                className="absolute rounded-full w-12 !top-4 right-4" src={deleteicon} alt="deleteicon" />
-                        )}
-                    </div>
 
-                </div>
-            ))}
+                    </div>
+                ))
+            ) :
+                (
+                    <img className="w-1/2 block max-w-96 mx-auto my-4 max-576:!w-full" src={noData} alt="no-data" />
+            )
+            }
         </div>
     )
 }

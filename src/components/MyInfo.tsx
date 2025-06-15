@@ -39,7 +39,7 @@ export default function MyInfo() {
             confirmButtonColor: '#006fd3',
             showCancelButton: true,
             cancelButtonText: 'Cancel',
-            cancelButtonColor: '#F15D8E',
+            cancelButtonColor: '#ff709c',
             preConfirm: () => {
                 const nameVal = (document.getElementById('swal-name') as HTMLInputElement).value.trim()
                 const emailVal = (document.getElementById('swal-email') as HTMLInputElement).value.trim()
@@ -99,7 +99,7 @@ export default function MyInfo() {
             confirmButtonText: 'Yes, delete it!',
             confirmButtonColor: '#006fd3',
             cancelButtonText: 'Cancel',
-            cancelButtonColor: '#F15D8E'
+            cancelButtonColor: '#ff709c'
         })
 
         if (result.isConfirmed) {
@@ -137,7 +137,7 @@ export default function MyInfo() {
             confirmButtonText: 'Yes, delete it!',
             confirmButtonColor: '#006fd3',
             cancelButtonText: 'Cancel',
-            cancelButtonColor: '#F15D8E'
+            cancelButtonColor: '#ff709c'
         })
 
         if (result.isConfirmed) {
@@ -175,7 +175,7 @@ export default function MyInfo() {
             confirmButtonText: 'Yes, reset it!',
             confirmButtonColor: '#006fd3',
             cancelButtonText: 'Cancel',
-            cancelButtonColor: '#F15D8E'
+            cancelButtonColor: '#ff709c'
         })
 
         if (result.isConfirmed) {
@@ -208,7 +208,7 @@ export default function MyInfo() {
     }
 
     return (
-        <div className="w-1/5 max-768:w-full px-3 py-4 flex flex-col gap-4 ">
+        <div className="w-1/5 max-768:w-full px-3 py-4 flex flex-col gap-4 " data-aos="zoom-in">
             <img className="w-full max-w-48 mx-auto" src={userimg} alt="user" />
             {user && (
                 <>
