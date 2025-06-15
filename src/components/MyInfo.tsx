@@ -116,7 +116,7 @@ export default function MyInfo() {
                 })
                 localStorage.removeItem('token')
                 setUser(null)
-                navigate("/home")
+                navigate("/")
             } catch (err: any) {
                 Swal.fire({
                     title: 'Error',
@@ -195,7 +195,7 @@ export default function MyInfo() {
                     confirmButtonColor: '#006fd3',
                 })
                 fetchUser()
-                navigate("/")
+                navigate("/home")
             } catch (err: any) {
                 Swal.fire({
                     title: 'Error',

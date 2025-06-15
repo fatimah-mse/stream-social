@@ -13,51 +13,37 @@ export default function Login() {
         const email = formData.get("email") as string
         const password = formData.get("password") as string
 
-        const confirmResult = await Swal.fire({
-            title: 'Are you sure?',
-            text: 'You are about to log in to your account.',
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonText: 'Yes, log me in!',
-            confirmButtonColor: '#006fd3',
-            cancelButtonText: 'Cancel',
-            cancelButtonColor: '#F15D8E'
-        })
+        try {
+            const response = await axios.post("https://stream-social-apis-production.up.railway.app/api/auth/login", {
+                email,
+                password,
+            })
 
-        if (confirmResult.isConfirmed) {
+            const { token } = response.data.data
 
-            try {
-                const response = await axios.post("https://stream-social-apis-production.up.railway.app/api/auth/login", {
-                    email,
-                    password,
-                })
+            localStorage.setItem("token", token)
+            localStorage.setItem("userId", response.data.data.user.id)
 
-                const { token } = response.data.data
+            await Swal.fire({
+                title: 'Success!',
+                text: 'Login successful!',
+                icon: 'success',
+                confirmButtonText: 'OK',
+                confirmButtonColor: '#006fd3',
+                cancelButtonColor: '#F15D8E'
+            })
 
-                localStorage.setItem("token", token)
-                localStorage.setItem("userId", response.data.data.user.id)
-
-                await Swal.fire({
-                    title: 'Success!',
-                    text: 'Login successful!',
-                    icon: 'success',
-                    confirmButtonText: 'OK',
-                    confirmButtonColor: '#006fd3',
-                    cancelButtonColor: '#F15D8E'
-                })
-
-                navigate("/home")
-            } catch (err: any) {
-                const errorMessage = err.response?.data?.message || "Login failed"
-                Swal.fire({
-                    title: 'Error!',
-                    text: errorMessage,
-                    icon: 'error',
-                    confirmButtonText: 'Try Again',
-                    confirmButtonColor: '#006fd3',
-                    cancelButtonColor: '#F15D8E'
-                })
-            }
+            navigate("/home")
+        } catch (err: any) {
+            const errorMessage = err.response?.data?.message || "Login failed"
+            Swal.fire({
+                title: 'Error!',
+                text: errorMessage,
+                icon: 'error',
+                confirmButtonText: 'Try Again',
+                confirmButtonColor: '#006fd3',
+                cancelButtonColor: '#F15D8E'
+            })
         }
     }
 
